@@ -25,6 +25,10 @@
   --paper:         #fdfbf7;
   --cream:         #fdf3e4;
   --white:         #ffffff;
+  /* Sampled from the concept mockup's own product-card background. The cart
+     renders have this colour baked in, so any panel behind them must match
+     exactly or a visible seam appears around each render. */
+  --render-bg:     #f6f5f3;
   --muted:         #5d716f;
   --line:          rgba(8, 62, 65, .13);
   --line-dark:     rgba(255, 255, 255, .14);
@@ -54,7 +58,14 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-img, svg { max-width: 100%; display: block; }
+svg { max-width: 100%; display: block; }
+
+/* height:auto is load-bearing. The width/height attributes on every <img> become
+   CSS presentational hints, and aspect-ratio only resolves the *missing*
+   dimension — so a definite attribute height would beat aspect-ratio and let
+   object-fit crop the image. Rules that genuinely want a fixed height (the nav
+   and footer logos) override this by specificity. */
+img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; cursor: pointer; border: none; background: none; }
 ul { list-style: none; }
@@ -245,7 +256,7 @@ ul.ticks.on-dark li { color: rgba(255, 255, 255, .78); }
 }
 .prod:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: rgba(8, 62, 65, .2); }
 .prod.featured { border: 2px solid var(--orange); box-shadow: var(--shadow-sm); }
-.prod-media { background: var(--cream); padding: 12px; position: relative; }
+.prod-media { background: var(--render-bg); padding: 12px; position: relative; }
 .prod-media img { width: 100%; aspect-ratio: 200 / 128; object-fit: contain; }
 .prod-flag { position: absolute; top: 12px; left: 12px; background: var(--orange); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; }
 .prod-body { padding: 20px 22px 24px; display: flex; flex-direction: column; flex: 1; }
@@ -307,10 +318,10 @@ ul.ticks.on-dark li { color: rgba(255, 255, 255, .78); }
 .split-copy { padding: 54px 48px; }
 .split-copy h2 { font-family: Archivo, sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: -.028em; line-height: .98; font-size: clamp(1.55rem, 3.6vw, 2.8rem); margin: 14px 0 16px; }
 .split-copy p { color: rgba(255, 255, 255, .8); font-size: 15.5px; }
-.split-media { background: var(--cream); display: grid; place-items: center; padding: 32px; }
-/* Capped near the crops' native 200px width - these come out of a flat mockup
-   bitmap, so scaling them to fill the panel would visibly soften them. */
-.split-media img { width: 100%; max-width: 340px; object-fit: contain; }
+.split-media { background: var(--render-bg); display: grid; place-items: center; padding: 32px; }
+/* Sources are now 2x (400x256), so a 460px cap stays close to native while
+   filling the panel properly. */
+.split-media img { width: 100%; max-width: 460px; object-fit: contain; }
 
 /* ---------- comparison table --------------------------------------------- */
 .table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--white); }
@@ -328,6 +339,11 @@ table.spec .no { color: rgba(8, 62, 65, .3); }
 .cta-band { background: var(--orange); color: #fff; border-radius: var(--r-lg); padding: 48px; display: flex; justify-content: space-between; align-items: center; gap: 34px; flex-wrap: wrap; }
 .cta-band h2 { font-family: Archivo, sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: -.03em; line-height: .96; font-size: clamp(1.55rem, 4vw, 3rem); }
 .cta-band p { margin-top: 12px; max-width: 620px; color: rgba(255, 255, 255, .92); }
+
+/* A standalone contact address is a primary action, not inline prose — give it
+   a real tap target and size it accordingly. */
+.contact-link { display: inline-block; font-family: Archivo, sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--orange); padding: 6px 0; }
+.contact-link:hover { color: var(--teal); text-decoration: underline; text-underline-offset: 3px; }
 
 .note-box { background: var(--cream); border-left: 3px solid var(--apricot); border-radius: 0 var(--r) var(--r) 0; padding: 20px 24px; font-size: 14px; color: var(--muted); }
 .note-box b { color: var(--teal); }
@@ -361,7 +377,10 @@ details.faq p { margin-top: 12px; color: var(--muted); font-size: 14.5px; max-wi
 /* ---------- footer ------------------------------------------------------- */
 footer.site { background: var(--teal-deep); color: rgba(255, 255, 255, .68); padding: 56px 0 26px; font-size: 14px; }
 .foot-grid { display: grid; grid-template-columns: 1.7fr 1fr 1fr 1fr; gap: 44px; }
-.foot-brand img { height: 40px; margin-bottom: 16px; }
+/* width:auto is required, not optional: the <img> carries a width attribute, so
+   without it max-width:100% clamps the width while height stays fixed and the
+   lockup stretches. Same reason .nav-logo img sets it. */
+.foot-brand img { height: 44px; width: auto; margin-bottom: 16px; }
 .foot-brand p { max-width: 320px; line-height: 1.6; }
 footer.site h4 { font-family: Archivo, sans-serif; color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; margin-bottom: 14px; }
 footer.site li { margin-bottom: 9px; }
@@ -430,9 +449,35 @@ footer.site a:hover { color: var(--apricot); }
   .cta-band { padding: 28px; }
   .split-copy { padding: 32px 24px; }
   .btn { padding: 12px 20px; }
+  /* At this width the two caption items wrap onto separate lines and sit over
+     the cart's own printed branding. Keep one line and deepen the scrim. */
+  .hero-media figcaption { padding: 40px 16px 12px; font-size: 11px; background: linear-gradient(180deg, transparent, rgba(5, 42, 44, .94)); }
+  .hero-media figcaption span:last-child { display: none; }
   .stat { border-left: none; border-top: 2px solid rgba(8, 62, 65, .22); padding: 14px 0 0; }
   .edge-top, .edge-bottom { clip-path: none; }
 }
+
+/* ---------- touch targets & mobile input behaviour -----------------------
+   WCAG 2.5.8 asks for 24x24 minimum; these clear it comfortably on phones
+   without disturbing the desktop rhythm. The 16px input font-size is not
+   cosmetic — iOS Safari auto-zooms the viewport on focus for anything smaller. */
+@media (max-width: 980px) {
+  footer.site li a,
+  .foot-bottom a,
+  .demo-banner a { display: inline-block; padding: 6px 0; }
+  .crumb a { display: inline-block; padding: 9px 0; }
+  .textlink { padding: 8px 0; }
+  details.faq summary { padding: 9px 0; }
+  .check input { width: 24px; height: 24px; }
+  .field input, .field select, .field textarea { padding: 14px 15px; font-size: 16px; }
+  .app-tile .cap { padding: 14px 16px 16px; }
+}
+
+/* Tables scroll inside their own container; say so on narrow screens, since a
+   clipped edge alone is not an obvious affordance. */
+.table-hint { display: none; font-size: 11.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.table-hint::after { content: " \2192"; }
+@media (max-width: 900px) { .table-hint { display: block; } }
 
 @media print {
   .nav, .demo-banner, .nav-toggle, .cta-band { display: none !important; }

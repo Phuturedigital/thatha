@@ -143,10 +143,53 @@ of search results so it cannot compete with the real thatha.co.za.
 |---|---|
 | Contact form has no backend | Submitting packages the answers into a pre-filled `mailto:`, and says plainly that nothing was sent. Wire to a real endpoint for production. |
 | Phone number is a placeholder | `site.js` and `contact.html` need a real number. |
-| Product prices disagree with earlier drafts | This site uses the concept mockup's ladder (R999 / R1,499 / R2,499). An earlier draft had Pro at R3,500–R5,000. **Needs a decision.** |
 | No brochure PDF | "Get the brochure" routes to the enquiry form. |
 | `assets/logo/lockup-teal.webp` is unused | Kept for future light-background headers. |
 | Benton Sans not licensed | See substitution 1 above. |
+
+Pricing is **settled**: Basic R999 / Plus R1,499 / Pro R2,499 / Government on enquiry,
+all labelled indicative. The earlier draft's Pro figure (R3,500–R5,000) is superseded.
+
+---
+
+## Testing
+
+A Playwright harness drives every page at desktop (1440) and mobile (390):
+
+```bash
+npm install --no-save playwright && npx playwright install chromium
+python -m http.server 8765          # in one terminal
+node test/audit.mjs                 # in another
+node test/shoot.mjs                 # component screenshots for review
+node test/measure.mjs               # box/ratio measurements for key elements
+```
+
+`audit.mjs` checks the things that are invisible in source but obvious in a browser:
+
+- console errors and failed requests
+- horizontal page overflow, and any element wider than the viewport (excluding
+  content inside a deliberate horizontal scroller, so the comparison tables
+  don't register as false positives)
+- images upscaled beyond 1.35× — i.e. why something looks soft or small
+- **distorted images**, comparing rendered aspect ratio against intrinsic
+- touch targets under 24px, applying WCAG 2.5.8's exemption for links inline in prose
+
+Current state: **all 14 page/viewport combinations clean.** Screenshots land in
+`test/shots/` and are gitignored (~34MB).
+
+### Two bugs the harness caught that source review had missed
+
+**1. Stretched footer logo.** `.foot-brand img` set `height` but not `width`, so
+the `width="900"` attribute clamped by `max-width: 100%` broke the aspect ratio.
+
+**2. `aspect-ratio` silently defeated by the width/height attributes.** An
+`<img>`'s `width`/`height` attributes become CSS *presentational hints*, and
+`aspect-ratio` only resolves the **missing** dimension. Once `height="824"`
+supplied a definite height alongside `width: 100%`, `aspect-ratio` was ignored
+and `object-fit: cover` cropped the image — the hero measured 554×824 (ratio
+0.67) where 1.408 was intended. Fixed by `img { height: auto }` in the reset,
+which is precisely why the canonical responsive-image rule is `width: 100%;
+height: auto` and not `width` alone.
 
 ---
 

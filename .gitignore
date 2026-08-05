@@ -5,6 +5,10 @@ package-lock.json
 # Vercel
 .vercel
 
+# Playwright output — regenerated on demand, ~34MB of PNGs. The audit scripts
+# themselves are committed; their screenshots are not.
+test/shots/
+
 # Backups only — assets/ is committed (real THATHA brand + product imagery)
 *.html.bak
 

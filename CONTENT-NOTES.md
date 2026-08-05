@@ -79,11 +79,35 @@ logo files ship in exactly those colourways.
 The mockup also uses an **uppercase** "THATHA" wordmark while the brand book's is
 lowercase `thatha™` — the mockup appears to predate or ignore the brand pack.
 
+## Output revision — 2x assets
+
+Originally exported at native crop size (101 KB total), which meant the applications
+page displayed tiles at **1.9× upscale**. Regenerated at 2× with Lanczos resampling plus
+a restrained unsharp mask (radius 1.2, 60%, threshold 3) — mild on purpose, since the
+source is already lossy and heavy sharpening would amplify its artifacts.
+
+| | Native | 2× |
+|---|---|---|
+| Application tiles | ~146×100 | ~292×200 |
+| Product renders | 200×128 | 400×256 |
+| Hero | 580×412 | 1160×824 |
+| **Total** | **101 KB** | **216 KB** |
+
+Display scales now: hero **0.48×**, product renders **0.67×**, app tiles **1.01×** — all
+at or below native, so nothing is upscaled.
+
+The applications grid also moved from 2-up to 3-up, which brought its images from 551px
+displayed (1.89× upscale) down to ~342px (1.17×).
+
+`--render-bg: #f6f5f3` in `styles.css` was sampled directly from the mockup's own
+product-card background. The cart renders carry that colour baked in, so any panel
+behind them must match exactly or a seam shows around each render.
+
 ## Open content decisions
 
-1. **Pricing ladder.** This build uses the mockup's figures (Basic R999 / Plus R1,499 /
-   Pro R2,499). The earlier draft had Basic R999–1,499, Plus R1,799–2,499, **Pro
-   R3,500–5,000**. Pro differs by roughly 2×. Needs a call.
+1. ~~**Pricing ladder.**~~ **RESOLVED 2026-08-06** — confirmed as Basic R999 / Plus
+   R1,499 / Pro R2,499 / Government on enquiry, all labelled indicative. The earlier
+   draft's Pro R3,500–5,000 is superseded.
 2. **Phone number** is a placeholder in `contact.html` and `site.js`.
 3. **Brochure PDF** does not exist; "Get the brochure" routes to the enquiry form.
 4. **Primary Logo typo** — "Take your trade *turther*." See README. Not used on this site,

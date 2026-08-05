@@ -3,6 +3,10 @@ README.md
 DEPLOY.md
 CONTENT-NOTES.md
 
+# Test harness — never part of the deployed site.
+test/
+node_modules/
+
 # OS / editor
 .DS_Store
 Thumbs.db
