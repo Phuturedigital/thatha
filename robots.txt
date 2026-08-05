@@ -1,0 +1,5 @@
+# This is a demo preview build. It must not be indexed — it would compete with
+# the real thatha.co.za in search results and its content is not contractual.
+# Reinforces the X-Robots-Tag: noindex header set in vercel.json.
+User-agent: *
+Disallow: /

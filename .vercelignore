@@ -1,0 +1,12 @@
+# Internal docs — stay in git, kept off the public demo URL.
+README.md
+DEPLOY.md
+CONTENT-NOTES.md
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*.html.bak
+.vscode/
+.idea/

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- THATHA logo mark. Derived from the brand pack's Logo Mark, with the live
+     <text> trademark glyph removed and the viewBox tightened to the artwork so
+     it has zero font dependency and recolours via CSS `color`. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="62.55 131.13 376 376" role="img" aria-label="THATHA">
+  <g fill="currentColor">
+    <polygon points="321.37 303.85 311.29 321.3 228.88 463.94 153.97 443.19 241 292.59 118.92 292.63 162.4 217.37 272.38 217.33 278.37 227.91 278.39 227.93 314.99 292.54 321.37 303.85"/>
+    <circle cx="334.26" cy="199.16" r="47.92"/>
+    <polygon points="380.6 396.36 374.83 406.95 328.6 487.02 263.66 449.55 325.67 342.12 334.92 326.12 335.53 326.47 380.6 396.36"/>
+  </g>
+</svg>
