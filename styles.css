@@ -133,15 +133,6 @@ h1, h2, h3, h4 { font-family: Archivo, 'Public Sans', system-ui, sans-serif; fon
 .edge-top    { clip-path: polygon(0 var(--e, 46px), 100% 0, 100% 100%, 0 100%); margin-top: -1px; }
 .edge-bottom { clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--e, 46px)), 0 100%); }
 
-/* ---------- demo banner -------------------------------------------------- */
-.demo-banner {
-  background: var(--apricot); color: var(--teal);
-  text-align: center; padding: 9px 20px;
-  font-size: 12.5px; letter-spacing: .02em; font-weight: 500;
-}
-.demo-banner strong { font-weight: 700; }
-.demo-banner a { text-decoration: underline; text-underline-offset: 2px; }
-
 /* ---------- nav ---------------------------------------------------------- */
 .nav { position: sticky; top: 0; z-index: 60; background: var(--teal); color: #fff; border-bottom: 1px solid var(--line-dark); }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 14px 0; }
@@ -350,6 +341,7 @@ table.spec .no { color: rgba(8, 62, 65, .3); }
 
 /* ---------- forms -------------------------------------------------------- */
 .form-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 36px; box-shadow: var(--shadow-sm); }
+.form-hp { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .field { display: block; margin-bottom: 18px; }
 .field > span { display: block; font-size: 11.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; margin-bottom: 7px; }
 .field > span .req { color: var(--orange); }
@@ -361,6 +353,7 @@ table.spec .no { color: rgba(8, 62, 65, .3); }
 .field input:focus, .field select:focus, .field textarea:focus {
   outline: none; border-color: var(--verdigris); box-shadow: 0 0 0 3px rgba(70, 165, 149, .18);
 }
+.form-card button[disabled] { cursor: wait; opacity: .68; transform: none; }
 .field textarea { resize: vertical; min-height: 118px; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .check { display: flex; gap: 11px; align-items: flex-start; font-size: 13.5px; color: var(--muted); margin: 6px 0 20px; }
@@ -463,8 +456,7 @@ footer.site a:hover { color: var(--apricot); }
    cosmetic — iOS Safari auto-zooms the viewport on focus for anything smaller. */
 @media (max-width: 980px) {
   footer.site li a,
-  .foot-bottom a,
-  .demo-banner a { display: inline-block; padding: 6px 0; }
+  .foot-bottom a { display: inline-block; padding: 6px 0; }
   .crumb a { display: inline-block; padding: 9px 0; }
   .textlink { padding: 8px 0; }
   details.faq summary { padding: 9px 0; }
@@ -480,92 +472,6 @@ footer.site a:hover { color: var(--apricot); }
 @media (max-width: 900px) { .table-hint { display: block; } }
 
 @media print {
-  .nav, .demo-banner, .nav-toggle, .cta-band { display: none !important; }
+  .nav, .nav-toggle, .cta-band { display: none !important; }
   body { background: #fff; }
 }
-
-/* pd-network:start */
-/* Shared cross-link block across the Phuture Digital concept sites. Same markup and
-   rhythm everywhere; the palette below maps this site's own tokens onto it. */
-.pd-network {
-  background: #052a2c;
-  color: rgba(255,255,255,.66);
-  font-family: inherit;
-  padding: clamp(34px, 4.4vw, 52px) clamp(20px, 3.6vw, 48px);
-}
-.pd-network-inner { max-width: 1080px; margin: 0 auto; }
-.pd-network-eyebrow {
-  font-size: 10.5px; letter-spacing: .15em; text-transform: uppercase;
-  color: #46a595; font-weight: 700; margin: 0 0 12px;
-}
-.pd-network-title {
-  font-family: 'Archivo', system-ui, sans-serif;
-  font-size: clamp(21px, 2.5vw, 27px); line-height: 1.15; letter-spacing: -.015em;
-  color: #ffffff; font-weight: 700; margin: 0 0 10px; text-wrap: balance;
-}
-.pd-network-lede {
-  font-size: 14.5px; line-height: 1.6; max-width: 56ch;
-  color: rgba(255,255,255,.66); margin: 0 0 26px;
-}
-.pd-network-grid {
-  list-style: none; margin: 0 0 28px; padding: 0;
-  /* 150px min keeps all four on one row on desktop (auto-fit collapses the empty
-     tracks), goes 2-up on phones instead of a ~1800px stack, and avoids the
-     awkward 3+1 wrap a 200px min produces around tablet width. */
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px;
-}
-.pd-network-card { margin: 0; }
-.pd-network-card a {
-  display: flex; flex-direction: column; height: 100%;
-  padding: 0; overflow: hidden; text-decoration: none;
-  background: #083e41; border: 1px solid rgba(255,255,255,.14); border-radius: 12px;
-  transition: border-color .18s ease, transform .18s ease, background .18s ease;
-}
-.pd-network-card a:hover,
-.pd-network-card a:focus-visible {
-  border-color: #46a595; background: #0c5257; transform: translateY(-2px);
-}
-.pd-network-card a:focus-visible { outline: 2px solid #46a595; outline-offset: 2px; }
-/* height:auto is required, not optional: the width/height attributes on the <img>
-   would otherwise pin the height and defeat aspect-ratio. */
-.pd-network-thumb {
-  display: block; width: 100%; height: auto;
-  aspect-ratio: 16 / 10; object-fit: cover; object-position: top center;
-  background: #0c5257; border-bottom: 1px solid rgba(255,255,255,.14);
-}
-.pd-network-card a:hover .pd-network-thumb { opacity: .92; }
-.pd-network-body { display: flex; flex-direction: column; gap: 3px; flex: 1; padding: 13px 15px 14px; }
-.pd-network-name { color: #ffffff; font-size: 14.5px; font-weight: 650; line-height: 1.25; }
-.pd-network-sector { color: rgba(255,255,255,.66); font-size: 12px; line-height: 1.4; }
-.pd-network-go {
-  color: #46a595; font-size: 11px; letter-spacing: .05em; font-weight: 650;
-  margin-top: auto; padding-top: 11px;
-}
-.pd-network-cta {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px;
-  padding-top: 22px; border-top: 1px solid rgba(255,255,255,.14);
-}
-.pd-network-cta p { margin: 0 auto 0 0; font-size: 14px; color: #ffffff; font-weight: 600; }
-.pd-network-btn {
-  background: #46a595; color: #052a2c; text-decoration: none;
-  padding: 10px 18px; border-radius: 12px; font-size: 13.5px; font-weight: 650;
-}
-.pd-network-btn:hover { opacity: .9; }
-.pd-network-link {
-  color: rgba(255,255,255,.66); text-decoration: none; font-size: 13px;
-  border-bottom: 1px solid rgba(255,255,255,.14); padding-bottom: 2px;
-}
-.pd-network-link:hover { color: #ffffff; }
-.pd-network-mark {
-  margin: 22px 0 0; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.14);
-  font-size: 11.5px; line-height: 1.55; color: rgba(255,255,255,.66); max-width: 72ch;
-}
-.pd-network-mark strong { color: #ffffff; font-weight: 650; }
-@media (max-width: 560px) {
-  .pd-network-cta p { margin-right: 0; width: 100%; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .pd-network-card a { transition: none; }
-  .pd-network-card a:hover { transform: none; }
-}
-/* pd-network:end */

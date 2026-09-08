@@ -2,6 +2,7 @@
 README.md
 DEPLOY.md
 CONTENT-NOTES.md
+LAUNCH-CHECKLIST.md
 
 # Test harness — never part of the deployed site.
 test/
@@ -14,3 +15,4 @@ Thumbs.db
 *.html.bak
 .vscode/
 .idea/
+.htmlvalidate.json

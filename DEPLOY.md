@@ -1,94 +1,67 @@
-# Deploy the THATHA demo
+# Deploying THATHA
 
-Zero-build static site — no `package.json`, no framework, nothing to compile. Vercel
-serves the files as-is, so a deploy takes about ten seconds and there is no build step
-that can fail the day before a meeting.
+The repository is configured for Vercel as a static site with one Node.js
+Function. `vercel.json` supplies clean URLs, cache rules and security headers.
 
-## Option A — Vercel CLI (fastest)
+## 1. Import or update the Vercel project
 
-```bash
-# 1. Install the CLI once
-npm install -g vercel
+Connect the `Phuturedigital/thatha` repository and use these settings:
 
-# 2. From this folder
-cd thatha
+- Framework preset: Other
+- Root directory: repository root
+- Build command: none
+- Output directory: none
+- Install command: none
 
-# 3. Log in (opens a browser)
-vercel login
+Vercel automatically serves files from the root and deploys `api/enquiry.js` as
+the `/api/enquiry` function.
 
-# 4. Deploy a preview
-vercel
+## 2. Configure enquiry email
 
-#    Set up and deploy?              -> Y
-#    Which scope?                    -> your account
-#    Link to existing project?       -> N
-#    Project name?                   -> thatha-demo
-#    In which directory is your code -> ./
-#    Override settings?              -> N
+Create or select the client's Resend account and verify a sending domain. Add
+the following encrypted environment variables for Preview and Production:
 
-# 5. Promote to the production URL
-vercel --prod
+```text
+RESEND_API_KEY=re_...
+ENQUIRY_FROM_EMAIL=THATHA Website <website@verified-sending-domain>
+ENQUIRY_TO_EMAIL=client-recipient@example.co.za
 ```
 
-The URL printed at the end is the link you share.
+Multiple recipients can be comma-separated. Redeploy after changing variables,
+then send one test for each major enquiry type. Confirm both delivery and the
+Reply-To address before launch.
 
-## Option B — Vercel dashboard, no CLI
+## 3. Approve content before mapping the domain
 
-1. Push this folder to GitHub (already done: `Phuturedigital/thatha`)
-2. Go to <https://vercel.com/new>
-3. Import the `thatha` repo
-4. **Framework preset: Other.** Leave build command and output directory **empty** —
-   there is no build
-5. Deploy
+Complete `LAUNCH-CHECKLIST.md`. In particular, confirm:
 
-Vercel will redeploy automatically on every push to the default branch.
+- official company, email, telephone and location details;
+- whether `thatha.co.za` is the launch domain;
+- product availability, manufacturing status, prices and specifications;
+- approved photography, brochure and investor materials;
+- privacy notice and any analytics or advertising requirements.
 
-## Option C — drag and drop
+The repository no longer blocks search indexing. Keep the production domain
+disconnected until the content is approved; Vercel preview deployments should
+remain protected or shared only with reviewers.
 
-Zip this folder, drop it on <https://vercel.com/new>. Fine for a one-off share, but you
-lose the git-push-to-redeploy loop.
+## 4. Map the production domain
 
-## Custom subdomain
+Add the confirmed apex domain and `www` hostname in Vercel, then apply the DNS
+records Vercel provides at the client's DNS host. Choose one hostname as the
+primary and redirect the other to it.
 
-1. Vercel project → **Settings → Domains**
-2. Add e.g. `demo.thatha.co.za`
-3. Vercel shows a CNAME (usually `cname.vercel-dns.com`) — add it at your DNS provider
-4. Allow 1–5 minutes, occasionally up to an hour
+After DNS and TLS are active:
 
-## What `vercel.json` configures
+1. add canonical URLs and an XML sitemap using the confirmed primary hostname;
+2. update Open Graph image URLs to absolute production URLs;
+3. submit the sitemap in Google Search Console and Bing Webmaster Tools;
+4. test the contact form on the production hostname;
+5. verify the CSP, cache, robots and redirect headers;
+6. run the full desktop/mobile audit one final time.
 
-- **Clean URLs** — `/products` instead of `/products.html`. Internal links still use
-  `.html` so the site also works when opened locally; Vercel redirects them.
-- **`X-Robots-Tag: noindex, nofollow`** — the demo will not be indexed, so it cannot
-  compete with the real thatha.co.za or be found by a client's customers. Combined with
-  `robots.txt`. Note the URL is *unlisted*, not private — anyone with the link can open
-  it.
-- **Security headers** — `nosniff`, `SAMEORIGIN`, `Referrer-Policy`,
-  `Permissions-Policy`. Clean result in any header checker.
-- **Cache headers** — a week on `/assets/*`, an hour on CSS/JS.
+## 5. Rollback
 
-`.vercelignore` keeps `README.md` and `DEPLOY.md` in git but off the public URL.
-
-## Pre-share checklist
-
-- [ ] Open all 7 pages, click every nav item and footer link — nothing should 404
-- [ ] Check the homepage on a phone: nav collapses to the hamburger, hero stacks,
-      product grid goes to one column
-- [ ] Submit the contact form — confirm it says plainly that nothing was sent and offers
-      the pre-filled email
-- [ ] Replace the placeholder phone number in `contact.html` and `site.js`
-- [ ] Confirm the pricing ladder is the one you want (see README "Known gaps")
-- [ ] Hit the URL from a private window so nothing is served from your cache
-
-## If something breaks
-
-- **Images missing in production but fine locally** — almost always letter case. Windows
-  is case-insensitive, Vercel's Linux filesystem is not. Run
-  `python ../verify_site.py` (see README) or check that every `src` matches the on-disk
-  filename exactly.
-- **Fonts look wrong** — Archivo and Public Sans load from Google Fonts. If the network
-  blocks it, the stack falls back to `system-ui`, which changes the look but breaks
-  nothing.
-- **A page 404s** — with `cleanUrls` the canonical path has no `.html`. Both work;
-  `.html` redirects.
-- **Domain not resolving** — DNS propagation. Give it an hour before debugging.
+Vercel retains previous deployments. If a production check fails, promote the
+last known-good deployment while the issue is corrected on a branch. Never put
+credentials in Git history during a rollback or hotfix.
