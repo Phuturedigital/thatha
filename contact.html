@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Contact THATHA — request a demo, brochure or programme quote</title>
-<meta name="description" content="Request a THATHA demo, get the brochure, discuss a government or enterprise-development programme, or start an investor conversation." />
+<title>Contact THATHA — register interest, brochure or programme quote</title>
+<meta name="description" content="Register your interest in THATHA, get the brochure, discuss a government or enterprise-development programme, or start an investor conversation." />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="THATHA" />
 <meta property="og:locale" content="en_ZA" />
 <meta property="og:title" content="Contact THATHA" />
-<meta property="og:description" content="Request a demo, a brochure, a programme quotation or an investor conversation." />
+<meta property="og:description" content="Register interest, request a brochure, discuss a programme quotation or start an investor conversation." />
 <meta property="og:image" content="assets/hero-cart.webp" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
@@ -21,10 +21,6 @@
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-
-<div class="demo-banner">
-  <strong>Concept preview.</strong> A website concept for THATHA by <a href="https://www.phuturedigital.co.za" rel="noopener">Phuture Digital</a> &mdash; content and pricing are indicative and not yet contractual.
-</div>
 
 <nav class="nav">
   <div class="wrap nav-inner">
@@ -41,7 +37,7 @@
       <a href="contact.html" class="active">Contact</a>
     </div>
     <div class="nav-actions">
-      <a class="btn btn-primary btn-sm" href="#enquiry">Request a demo</a>
+      <a class="btn btn-primary btn-sm" href="#enquiry">Register interest</a>
       <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
@@ -64,14 +60,19 @@
     <div class="grid grid-2" style="gap:48px;align-items:start">
 
       <div id="enquiry">
-        <form class="form-card" data-demo-form novalidate>
+        <form class="form-card" action="/api/enquiry" method="post" data-enquiry-form novalidate>
           <span class="eyebrow">Enquiry</span>
           <h2 class="display mt-s mb-m" style="font-size:1.7rem">Send us the basics</h2>
+
+          <label class="form-hp" aria-hidden="true">
+            <span>Leave this field empty</span>
+            <input type="text" name="website" tabindex="-1" autocomplete="off" />
+          </label>
 
           <label class="field">
             <span>What is this about? <span class="req">*</span></span>
             <select name="interest" id="interest" required>
-              <option value="Demo">Request a demo</option>
+              <option value="Interest">Register interest</option>
               <option value="Brochure">Get the brochure</option>
               <option value="Basic">THATHA Basic enquiry</option>
               <option value="Plus">THATHA Plus enquiry</option>
@@ -152,16 +153,11 @@
             </button>
           </div>
 
-          <div id="form-result" class="mt-m" hidden></div>
+          <div id="form-result" class="mt-m" aria-live="polite" hidden></div>
         </form>
       </div>
 
       <div class="grid" style="gap:20px">
-        <div class="note-box">
-          <b>This is a demo build.</b>
-          <p class="mt-s">There is no server attached to this preview, so the form above cannot deliver a message on its own. Submitting it will package your answers into a pre-filled email instead. On the production site this becomes a normal form submission.</p>
-        </div>
-
         <article class="card">
           <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></div>
           <h3>Email</h3>
@@ -223,107 +219,12 @@
 
 
 
-
-<!-- pd-network:start -->
-<section class="pd-network" aria-labelledby="pd-network-title">
-  <div class="pd-network-inner">
-    <p class="pd-network-eyebrow">Phuture Digital &middot; Concept work</p>
-    <h2 class="pd-network-title" id="pd-network-title">More concepts by Phuture Digital</h2>
-    <p class="pd-network-lede">Each of these is a complete site we designed and built to show what the finished thing looks like before anyone commits. Have a look at the others.</p>
-    <ul class="pd-network-grid">
-        <li class="pd-network-card">
-          <a href="https://khanya-concept.phuturedigital.co.za">
-            <img class="pd-network-thumb" src="/pd-concepts/khanya.webp" alt=""
-                 width="640" height="400" loading="lazy" decoding="async">
-            <span class="pd-network-body">
-              <span class="pd-network-name">Khanya Dental Studio</span>
-              <span class="pd-network-sector">Dental practice</span>
-              <span class="pd-network-go">View concept &rarr;</span>
-            </span>
-          </a>
-        </li>
-        <li class="pd-network-card">
-          <a href="https://hamba-concept.phuturedigital.co.za">
-            <img class="pd-network-thumb" src="/pd-concepts/hamba.webp" alt=""
-                 width="640" height="400" loading="lazy" decoding="async">
-            <span class="pd-network-body">
-              <span class="pd-network-name">Hamba Freight</span>
-              <span class="pd-network-sector">Last-mile logistics</span>
-              <span class="pd-network-go">View concept &rarr;</span>
-            </span>
-          </a>
-        </li>
-        <li class="pd-network-card">
-          <a href="https://umsuka-concept.phuturedigital.co.za">
-            <img class="pd-network-thumb" src="/pd-concepts/umsuka.webp" alt=""
-                 width="640" height="400" loading="lazy" decoding="async">
-            <span class="pd-network-body">
-              <span class="pd-network-name">UMSUKA Collection</span>
-              <span class="pd-network-sector">Boutique hospitality</span>
-              <span class="pd-network-go">View concept &rarr;</span>
-            </span>
-          </a>
-        </li>
-        <li class="pd-network-card">
-          <a href="https://africrest-concept.phuturedigital.co.za">
-            <img class="pd-network-thumb" src="/pd-concepts/africrest.webp" alt=""
-                 width="640" height="400" loading="lazy" decoding="async">
-            <span class="pd-network-body">
-              <span class="pd-network-name">Africrest</span>
-              <span class="pd-network-sector">Built-to-rent property</span>
-              <span class="pd-network-go">View concept &rarr;</span>
-            </span>
-          </a>
-        </li>
-        <li class="pd-network-card">
-          <a href="https://insurespr-concept.phuturedigital.co.za">
-            <img class="pd-network-thumb" src="/pd-concepts/insurespr.webp" alt=""
-                 width="640" height="400" loading="lazy" decoding="async">
-            <span class="pd-network-body">
-              <span class="pd-network-name">InsureSPR Health</span>
-              <span class="pd-network-sector">Bone &amp; muscle health</span>
-              <span class="pd-network-go">View concept &rarr;</span>
-            </span>
-          </a>
-        </li>
-        <li class="pd-network-card">
-          <a href="https://blueleaf-concept.phuturedigital.co.za">
-            <img class="pd-network-thumb" src="/pd-concepts/blueleaf.webp" alt=""
-                 width="640" height="400" loading="lazy" decoding="async">
-            <span class="pd-network-body">
-              <span class="pd-network-name">Blue Leaf Ice</span>
-              <span class="pd-network-sector">Ice supply &amp; delivery</span>
-              <span class="pd-network-go">View concept &rarr;</span>
-            </span>
-          </a>
-        </li>
-        <li class="pd-network-card">
-          <a href="https://thorn-grain-concept.phuturedigital.co.za">
-            <img class="pd-network-thumb" src="/pd-concepts/thorn-grain.webp" alt=""
-                 width="640" height="400" loading="lazy" decoding="async">
-            <span class="pd-network-body">
-              <span class="pd-network-name">Thorn &amp; Grain</span>
-              <span class="pd-network-sector">Online furniture store</span>
-              <span class="pd-network-go">View concept &rarr;</span>
-            </span>
-          </a>
-        </li>
-    </ul>
-    <div class="pd-network-cta">
-      <p>Want a site like this for your business?</p>
-      <a class="pd-network-btn" href="mailto:hello@phuturedigital.co.za">hello@phuturedigital.co.za</a>
-      <a class="pd-network-link" href="https://www.phuturedigital.co.za/portfolio" rel="noopener">See the full portfolio &rarr;</a>
-    </div>
-    <p class="pd-network-mark"><strong>Concept demo.</strong> THATHA is an invented brand, created by Phuture Digital to demonstrate design and build work. No units are manufactured or sold and every figure shown is illustrative.</p>
-  </div>
-</section>
-<!-- pd-network:end -->
 <footer class="site">
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
         <img src="assets/logo/lockup-white.webp" alt="THATHA" width="900" height="261" />
-        <p>Take your trade further. Affordable, portable, modular trading infrastructure — designed and manufactured in South Africa.</p>
+        <p>Take your trade further. Affordable, portable, modular trading infrastructure — designed in South Africa for local manufacture.</p>
       </div>
       <div>
         <h4>Products</h4>
@@ -354,7 +255,7 @@
     </div>
     <div class="foot-bottom">
       <span>&copy; 2026 THATHA. All rights reserved.</span>
-      <span>Website concept by <a href="https://www.phuturedigital.co.za" rel="noopener">Phuture Digital</a> &mdash; indicative, not contractual.</span>
+      <span>Brand and website by <a href="https://www.phuturedigital.co.za" rel="noopener">Phuture Digital</a>.</span>
     </div>
   </div>
 </footer>

@@ -134,6 +134,7 @@ for (const vp of VIEWPORTS) {
           return all > own + 12;   // meaningfully more prose around the link
         };
         for (const t of document.querySelectorAll('a, button, select, input, summary')) {
+          if (t.closest('[aria-hidden="true"]')) continue;
           const r = t.getBoundingClientRect();
           if (r.width === 0 || r.height === 0) continue;
           if (r.height >= 24) continue;                 // clears WCAG 2.5.8 AA
