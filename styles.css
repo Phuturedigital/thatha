@@ -133,15 +133,6 @@ h1, h2, h3, h4 { font-family: Archivo, 'Public Sans', system-ui, sans-serif; fon
 .edge-top    { clip-path: polygon(0 var(--e, 46px), 100% 0, 100% 100%, 0 100%); margin-top: -1px; }
 .edge-bottom { clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--e, 46px)), 0 100%); }
 
-/* ---------- demo banner -------------------------------------------------- */
-.demo-banner {
-  background: var(--apricot); color: var(--teal);
-  text-align: center; padding: 9px 20px;
-  font-size: 12.5px; letter-spacing: .02em; font-weight: 500;
-}
-.demo-banner strong { font-weight: 700; }
-.demo-banner a { text-decoration: underline; text-underline-offset: 2px; }
-
 /* ---------- nav ---------------------------------------------------------- */
 .nav { position: sticky; top: 0; z-index: 60; background: var(--teal); color: #fff; border-bottom: 1px solid var(--line-dark); }
 .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 14px 0; }
@@ -383,6 +374,8 @@ table.spec .no { color: rgba(8, 62, 65, .3); }
 .score-intro p { font-size: 12px; line-height: 1.45; margin-top: 7px; color: rgba(8, 62, 65, .7); }
 .score strong { display: block; font-family: Archivo, sans-serif; font-size: 2.4rem; line-height: 1; }
 .score span { display: block; font-size: 12px; margin-top: 7px; }
+.score { transition: background-color .18s ease, color .18s ease; }
+a.score:hover { background: var(--teal); color: #fff; }
 .campaign-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 54px; margin-top: 52px; align-items: start; }
 .campaign-grid h3 { font-size: 1.5rem; margin-bottom: 22px; }
 .campaign-list li { display: grid; grid-template-columns: 150px 1fr; gap: 18px; padding: 15px 0; border-top: 1px solid rgba(8, 62, 65, .2); font-size: 14px; }
@@ -532,7 +525,6 @@ footer.site a:hover { color: var(--apricot); }
 @media (max-width: 980px) {
   footer.site li a,
   .foot-bottom a,
-  .demo-banner a { display: inline-block; padding: 6px 0; }
   .crumb a { display: inline-block; padding: 9px 0; }
   .textlink { padding: 8px 0; }
   details.faq summary { padding: 9px 0; }
@@ -548,7 +540,7 @@ footer.site a:hover { color: var(--apricot); }
 @media (max-width: 900px) { .table-hint { display: block; } }
 
 @media print {
-  .nav, .demo-banner, .nav-toggle, .cta-band { display: none !important; }
+  .nav, .nav-toggle, .cta-band { display: none !important; }
   body { background: #fff; }
 }
 
