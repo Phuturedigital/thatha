@@ -3,7 +3,11 @@ const IEC_RESULTS_URL = 'https://results.elections.org.za/dashboards/lge/MapsJas
 export default async function handler(request, response) {
   try {
     const upstream = await fetch(`${IEC_RESULTS_URL}?t=${Date.now()}`, {
-      headers: { Accept: 'application/json' },
+      headers: {
+        Accept: 'application/json,text/plain,*/*',
+        Referer: 'https://results.elections.org.za/dashboards/lge/',
+        'User-Agent': 'Mozilla/5.0 (compatible; THATHA Election Information/1.0; +https://www.thathamove.org.za/election)'
+      },
       cache: 'no-store'
     });
     if (!upstream.ok) throw new Error(`IEC returned ${upstream.status}`);
