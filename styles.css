@@ -398,7 +398,7 @@ table.spec .no { color: rgba(8, 62, 65, .3); }
 .sponsor-option .textlink { margin-top: auto; padding-top: 28px; }
 .trade-forward { background: var(--apricot); color: var(--teal); padding: 88px 0; }
 .campaign-mast { display: grid; grid-template-columns: 1.5fr .5fr; gap: 48px; align-items: end; padding-bottom: 42px; border-bottom: 2px solid rgba(8, 62, 65, .22); }
-.campaign-mark { display: inline-block; background: var(--teal); color: #fff; padding: 7px 12px; font-size: 12px; font-weight: 700; transform: rotate(-1.5deg); }
+.campaign-mark { display: inline-block; background: var(--teal); color: #fff; padding: 7px 12px; font-size: 12px; font-weight: 700; transform: none; }
 .campaign-mast h2 { font-size: clamp(2rem, 4.8vw, 4.2rem); line-height: .95; text-transform: uppercase; margin-top: 22px; max-width: 980px; }
 .campaign-mast h1 { font-size: clamp(2.4rem, 5.6vw, 4.8rem); line-height: .91; text-transform: uppercase; margin: 22px 0 18px; max-width: 980px; }
 .campaign-mast .lead { color: rgba(8, 62, 65, .76); max-width: 760px; }
