@@ -10,6 +10,7 @@ This register separates verified facts from design intentions and planning assum
 | Sponsorship model | Intended programme model quoted per programme | Approved programme scope, delivery capability and reporting method | Qualified intended service | Pending — name/date required |
 | Product status | Pre-production; no completed deployments or trading history claimed | Prototype and pilot records as milestones are completed | Confirmed by current project status | Pending — name/date required |
 | South African focus | Initial market and intended production base is South Africa | Operating entity, supplier and delivery records | Qualified geographic focus | Pending — name/date required |
+| Visual ecosystem extensions | Mobility, packaging, apparel, footwear and community-programme images are future visual explorations | Approved product roadmap, prototypes and partner agreements for any launch | Clearly labelled as unlaunched concepts | Pending — name/date required |
 
 ## Approval
 
