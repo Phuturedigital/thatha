@@ -25,6 +25,26 @@
     });
   }
 
+  /* ---- election campaign clock ---------------------------------------- */
+  var clock = document.querySelector('[data-election-clock]');
+  if (clock) {
+    var value = clock.querySelector('[data-clock-value]');
+    var deadline = new Date(clock.getAttribute('data-election-date')).getTime();
+    var renderClock = function () {
+      var remaining = deadline - Date.now();
+      if (remaining <= 0) {
+        value.textContent = 'Voting closed';
+        clock.querySelector('.clock-label').textContent = 'Election day complete';
+        return;
+      }
+      var days = Math.floor(remaining / 86400000);
+      var hours = Math.floor((remaining % 86400000) / 3600000);
+      value.textContent = days + 'd ' + hours + 'h';
+    };
+    renderClock();
+    setInterval(renderClock, 60000);
+  }
+
   /* ---- enquiry form ----------------------------------------------------- */
   var form = document.querySelector('form[data-demo-form]');
   var out = document.getElementById('form-result');

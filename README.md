@@ -1,6 +1,6 @@
 # THATHA — demo website
 
-A concept build of the THATHA website: **7 static pages, no framework, no build step.**
+A concept build of the THATHA website: **9 static pages, no framework, no build step.**
 Same infrastructure pattern as the Africrest pitch demo — flat HTML, one stylesheet,
 one small progressive-enhancement script, deployed to Vercel.
 
@@ -9,6 +9,8 @@ index.html          Home — hero, range, value strip, applications, targets, ho
 products.html       Basic / Plus / Pro / Government + comparison table + accessories
 applications.html   8 trades, and why modularity is the point
 government.html     Municipal, NGO and corporate ESD programmes + procurement FAQ
+sponsor.html        Permanent corporate and community trader-sponsorship programme
+election.html       Temporary, politically neutral 2026 local-election civic tracker
 investors.html      Thesis, revenue model, honest status, risks
 about.html          Mission, the name, the mark, palette, credits
 contact.html        Enquiry form, direct contact, FAQ

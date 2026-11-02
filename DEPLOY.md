@@ -71,7 +71,7 @@ lose the git-push-to-redeploy loop.
 
 ## Pre-share checklist
 
-- [ ] Open all 7 pages, click every nav item and footer link — nothing should 404
+- [ ] Open all 9 pages, click every nav item and footer link — nothing should 404
 - [ ] Check the homepage on a phone: nav collapses to the hamburger, hero stacks,
       product grid goes to one column
 - [ ] Submit the contact form — confirm it says plainly that nothing was sent and offers
