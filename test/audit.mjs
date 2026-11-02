@@ -15,7 +15,7 @@ import { chromium } from 'playwright';
 import { mkdirSync } from 'node:fs';
 
 const BASE = process.argv[2] || 'http://127.0.0.1:8765';
-const PAGES = ['index', 'products', 'applications', 'government', 'sponsor', 'election', 'investors', 'about', 'contact'];
+const PAGES = ['index', 'products', 'applications', 'government', 'sponsor', 'election', 'investors', 'about', 'contact', 'privacy', 'terms', 'thanks'];
 const VIEWPORTS = [
   { name: 'desktop', width: 1440, height: 900, dsf: 2 },
   { name: 'mobile', width: 390, height: 844, dsf: 3, mobile: true },

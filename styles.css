@@ -339,6 +339,19 @@ table.spec .no { color: rgba(8, 62, 65, .3); }
 .note-box { background: var(--cream); border-left: 3px solid var(--apricot); border-radius: 0 var(--r) var(--r) 0; padding: 20px 24px; font-size: 14px; color: var(--muted); }
 .note-box b { color: var(--teal); }
 
+/* ---------- legal and policy pages ------------------------------------- */
+.legal-updated { margin-top: 24px; color: var(--apricot); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.legal-copy { max-width: 860px; }
+.legal-copy article { padding: 34px 0; border-bottom: 1px solid var(--line); }
+.legal-copy article:first-child { padding-top: 0; }
+.legal-copy article:last-child { border-bottom: 0; padding-bottom: 0; }
+.legal-copy h2 { font-size: clamp(1.35rem, 3vw, 2rem); margin-bottom: 14px; }
+.legal-copy p + p, .legal-copy ul + p { margin-top: 14px; }
+.legal-copy a, .check a { color: var(--orange); text-decoration: underline; text-underline-offset: 3px; }
+.legal-links a { color: inherit; }
+.response-card { max-width: 760px; margin: 7vh auto; }
+.election-archived .campaign-mark { background: var(--verdigris); }
+
 /* ---------- sponsor impact / Trade Forward campaign --------------------- */
 .story-hero { background: var(--teal-deep); color: #fff; padding: clamp(54px, 8vw, 96px) 0; }
 .story-hero-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(34px, 6vw, 76px); align-items: center; }

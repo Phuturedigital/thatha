@@ -29,6 +29,8 @@ export default async function handler(request, response) {
       municipalitiesExpected: Number(data.MunicExpected || 0),
       percentVotingDistrictsComplete: Number(data.Perc_VDsComplete || 0)
     };
+    payload.isFinal = payload.votingDistrictsExpected > 0 &&
+      payload.votingDistrictsComplete >= payload.votingDistrictsExpected;
 
     response.setHeader('Cache-Control', 's-maxage=120, stale-while-revalidate=300');
     response.status(200).json(payload);

@@ -25,6 +25,7 @@
     var value = clock.querySelector('[data-clock-value]');
     var deadline = new Date(clock.getAttribute('data-election-date')).getTime();
     var renderClock = function () {
+      if (document.body.classList.contains('election-archived')) return;
       var remaining = deadline - Date.now();
       if (remaining <= 0) {
         value.textContent = 'Voting closed';
@@ -70,6 +71,21 @@
           } else {
             resultStatus.textContent = 'Awaiting official results · voting closes at 21:00 on 4 November 2026.';
             resultStatus.classList.remove('live');
+          }
+          if (data.isFinal) {
+            document.body.classList.add('election-archived');
+            var electionTitle = document.querySelector('[data-election-title]');
+            var electionIntro = document.querySelector('[data-election-intro]');
+            var electionClock = document.querySelector('[data-election-clock]');
+            if (electionTitle) electionTitle.innerHTML = 'The final<br />official result.';
+            if (electionIntro) electionIntro.textContent = 'The 2026 Local Government Election count is complete. This page is retained as a neutral archive of the Electoral Commission’s final published national figures.';
+            if (electionClock) {
+              electionClock.querySelector('.clock-label').textContent = 'Election status';
+              electionClock.querySelector('[data-clock-value]').textContent = 'Count complete';
+              electionClock.querySelector('.clock-date').textContent = 'Final figures published by the IEC';
+            }
+            resultStatus.textContent = 'Final official IEC result · all expected voting districts are complete.';
+            resultStatus.classList.add('live');
           }
           if (data.reportDate) {
             resultUpdated.textContent = 'IEC report updated ' + new Date(data.reportDate).toLocaleString('en-ZA', {
