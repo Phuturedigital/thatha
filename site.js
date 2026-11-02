@@ -39,6 +39,54 @@
     setInterval(renderClock, 60000);
   }
 
+  /* ---- official IEC election results --------------------------------- */
+  var results = document.querySelector('[data-election-results]');
+  if (results) {
+    var resultStatus = results.querySelector('[data-results-status]');
+    var resultUpdated = results.querySelector('[data-results-updated]');
+    var number = new Intl.NumberFormat('en-ZA');
+    var setResult = function (name, text) {
+      var node = results.querySelector('[data-result="' + name + '"]');
+      if (node) node.textContent = text;
+    };
+    var loadResults = function () {
+      fetch(results.getAttribute('data-endpoint'), { headers: { Accept: 'application/json' } })
+        .then(function (response) {
+          if (!response.ok) throw new Error('Official results are unavailable');
+          return response.json();
+        })
+        .then(function (data) {
+          setResult('registeredVoters', number.format(data.registeredVoters || 0));
+          setResult('totalVotesCast', number.format(data.totalVotesCast || 0));
+          setResult('validVotesCast', number.format(data.validVotesCast || 0));
+          setResult('spoiltVotes', number.format(data.spoiltVotes || 0));
+          setResult('votingDistricts', number.format(data.votingDistrictsComplete || 0) + ' / ' + number.format(data.votingDistrictsExpected || 0));
+          var progress = Number(data.percentVotingDistrictsComplete || 0);
+          setResult('percentVotingDistrictsComplete', progress.toLocaleString('en-ZA', { maximumFractionDigits: 1 }) + '%');
+
+          if ((data.totalVotesCast || 0) > 0) {
+            resultStatus.textContent = 'Live official count · figures update as the IEC publishes results.';
+            resultStatus.classList.add('live');
+          } else {
+            resultStatus.textContent = 'Awaiting official results · voting closes at 21:00 on 4 November 2026.';
+            resultStatus.classList.remove('live');
+          }
+          if (data.reportDate) {
+            resultUpdated.textContent = 'IEC report updated ' + new Date(data.reportDate).toLocaleString('en-ZA', {
+              dateStyle: 'medium', timeStyle: 'short', timeZone: 'Africa/Johannesburg'
+            });
+          }
+        })
+        .catch(function () {
+          resultStatus.textContent = 'Official results are temporarily unavailable. Use the IEC dashboard link below for the latest published count.';
+          resultStatus.classList.remove('live');
+          resultUpdated.textContent = 'The figures shown here come only from the Electoral Commission of South Africa.';
+        });
+    };
+    loadResults();
+    setInterval(loadResults, 120000);
+  }
+
   /* ---- enquiry form ----------------------------------------------------- */
   var form = document.querySelector('form[data-enquiry-form]');
   if (!form) return;
