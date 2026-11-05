@@ -6,17 +6,28 @@
   var toggle = document.querySelector('.nav-toggle');
   var links = document.querySelector('.nav-links');
   if (toggle && links) {
+    var closeMenu = function (restoreFocus) {
+      links.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
+      if (restoreFocus) toggle.focus();
+    };
+    toggle.setAttribute('aria-label', 'Open menu');
     toggle.addEventListener('click', function () {
       var open = links.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     });
-    // Close when a link is chosen, so in-page anchors don't leave the menu up.
-    links.addEventListener('click', function (e) {
-      if (e.target.tagName === 'A') {
-        links.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      }
+    links.addEventListener('click', function (event) {
+      if (event.target.closest('a')) closeMenu(false);
     });
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape' && links.classList.contains('open')) closeMenu(true);
+    });
+    document.addEventListener('click', function (event) {
+      if (!event.target.closest('.nav')) closeMenu(false);
+    });
+    window.matchMedia('(max-width: 1120px)').addEventListener('change', function () { closeMenu(false); });
   }
 
   /* ---- IEC dashboard: refresh without a site redeploy ------------------ */

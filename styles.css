@@ -689,3 +689,25 @@ meter::-moz-meter-bar, progress::-moz-progress-bar { background: var(--verdigris
   .council-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 420px) { .council-grid { grid-template-columns: 1fr; } }
+
+/* Mobile navigation and enquiry actions stay usable on narrow/short screens. */
+html { scroll-padding-top: 96px; }
+.btn { min-height: 44px; max-width: 100%; white-space: normal; text-align: center; }
+.nav-actions > .btn { white-space: nowrap; }
+.nav-toggle { min-width: 44px; min-height: 44px; align-items: center; justify-content: center; }
+@media (max-width: 1120px) {
+  .nav-links.open { max-height: calc(100dvh - 80px); overflow-y: auto; overscroll-behavior: contain; }
+}
+@media (max-width: 640px) {
+  .nav-inner { gap: 8px; padding-block: 10px; }
+  .nav-logo { flex-shrink: 0; }
+  .nav-logo img { height: 29px; }
+  .nav-actions { gap: 8px; }
+  .nav-actions > .btn { padding: 10px 14px; font-size: 11px; letter-spacing: .02em; }
+  .btn-row, .election-actions { align-items: stretch; }
+  .btn-row > .btn, .election-actions > .btn, .cta-band > .btn { width: 100%; }
+  .results-filter { width: 100%; }
+  .results-filter select { font-size: 16px; min-height: 48px; width: 100%; }
+  .field input, .field select, .field textarea { min-width: 0; max-width: 100%; }
+  .check { padding-block: 8px; }
+}
