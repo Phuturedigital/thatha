@@ -271,6 +271,12 @@ ul.ticks.on-dark li { color: rgba(255, 255, 255, .78); }
 
 /* ---------- value strip (8 icons on dark) -------------------------------- */
 .value-strip { background: var(--teal-deep); color: #fff; padding: 34px 0; }
+/* A low-opacity brand texture; the green overlay preserves text contrast. */
+.value-strip-pattern {
+  background-image: linear-gradient(rgba(5, 42, 44, .93), rgba(5, 42, 44, .93)), url("assets/brand-pattern.jpg");
+  background-size: auto, 720px auto;
+  background-position: center;
+}
 .value-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px 34px; }
 .value-cell { display: flex; gap: 13px; align-items: flex-start; }
 .value-cell svg { width: 26px; height: 26px; color: var(--verdigris); flex: none; margin-top: 2px; }
