@@ -711,3 +711,17 @@ html { scroll-padding-top: 96px; }
   .field input, .field select, .field textarea { min-width: 0; max-width: 100%; }
   .check { padding-block: 8px; }
 }
+
+/* Portrait brand film: full frame, user-controlled playback, no initial video download. */
+.brand-film-grid { display: grid; grid-template-columns: 1fr minmax(0, 360px); gap: 64px; align-items: center; max-width: 1000px; }
+.brand-film-copy { min-width: 0; }
+.brand-film-copy h2 { font-size: clamp(2.4rem, 5.5vw, 4.5rem); text-transform: uppercase; margin: 18px 0 24px; line-height: .95; }
+.brand-film-copy .lead { max-width: 460px; }
+.brand-film-note { color: var(--muted); font-size: 13px; margin: 20px 0 28px; }
+.brand-film-media { min-width: 0; width: 100%; max-width: 360px; margin: 0; justify-self: center; }
+.brand-film-media video { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; background: var(--teal-deep); border-radius: var(--r-lg); box-shadow: var(--shadow-sm); }
+.brand-film-media figcaption { margin-top: 12px; font-size: 12px; line-height: 1.6; color: var(--muted); text-align: center; }
+@media (max-width: 640px) {
+  .brand-film-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .brand-film-copy .btn { width: 100%; }
+}
