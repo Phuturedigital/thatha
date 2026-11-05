@@ -19,88 +19,90 @@
     });
   }
 
-  /* ---- election campaign clock ---------------------------------------- */
-  var clock = document.querySelector('[data-election-clock]');
-  if (clock) {
-    var value = clock.querySelector('[data-clock-value]');
-    var deadline = new Date(clock.getAttribute('data-election-date')).getTime();
-    var renderClock = function () {
-      if (document.body.classList.contains('election-archived')) return;
-      var remaining = deadline - Date.now();
-      if (remaining <= 0) {
-        value.textContent = 'Voting closed';
-        clock.querySelector('.clock-label').textContent = 'Election day complete';
-        return;
-      }
-      var days = Math.floor(remaining / 86400000);
-      var hours = Math.floor((remaining % 86400000) / 3600000);
-      value.textContent = days + 'd ' + hours + 'h';
-    };
-    renderClock();
-    setInterval(renderClock, 60000);
-  }
-
-  /* ---- official IEC election results --------------------------------- */
+  /* ---- IEC dashboard: refresh without a site redeploy ------------------ */
   var results = document.querySelector('[data-election-results]');
   if (results) {
     var resultStatus = results.querySelector('[data-results-status]');
     var resultUpdated = results.querySelector('[data-results-updated]');
+    var area = results.querySelector('[data-results-area]');
     var number = new Intl.NumberFormat('en-ZA');
-    var setResult = function (name, text) {
-      var node = results.querySelector('[data-result="' + name + '"]');
-      if (node) node.textContent = text;
+    var latestData = null;
+    var loadingResults = false;
+    var lastRefreshFailed = false;
+    var formatNumber = function (value) { return value === null || value === undefined ? '—' : number.format(value); };
+    var element = function (tag, text, className) {
+      var node = document.createElement(tag);
+      if (text !== undefined) node.textContent = text;
+      if (className) node.className = className;
+      return node;
     };
-    var loadResults = function () {
-      fetch(results.getAttribute('data-endpoint'), { headers: { Accept: 'application/json' } })
-        .then(function (response) {
-          if (!response.ok) throw new Error('Official results are unavailable');
-          return response.json();
-        })
-        .then(function (data) {
-          setResult('registeredVoters', number.format(data.registeredVoters || 0));
-          setResult('totalVotesCast', number.format(data.totalVotesCast || 0));
-          setResult('validVotesCast', number.format(data.validVotesCast || 0));
-          setResult('spoiltVotes', number.format(data.spoiltVotes || 0));
-          setResult('votingDistricts', number.format(data.votingDistrictsComplete || 0) + ' / ' + number.format(data.votingDistrictsExpected || 0));
-          var progress = Number(data.percentVotingDistrictsComplete || 0);
-          setResult('percentVotingDistrictsComplete', progress.toLocaleString('en-ZA', { maximumFractionDigits: 1 }) + '%');
-
-          if ((data.totalVotesCast || 0) > 0) {
-            resultStatus.textContent = 'Live official count · figures update as the IEC publishes results.';
-            resultStatus.classList.add('live');
-          } else {
-            resultStatus.textContent = 'Awaiting official results · voting closes at 21:00 on 4 November 2026.';
-            resultStatus.classList.remove('live');
-          }
-          if (data.isFinal) {
-            document.body.classList.add('election-archived');
-            var electionTitle = document.querySelector('[data-election-title]');
-            var electionIntro = document.querySelector('[data-election-intro]');
-            var electionClock = document.querySelector('[data-election-clock]');
-            if (electionTitle) electionTitle.innerHTML = 'The final<br />official result.';
-            if (electionIntro) electionIntro.textContent = 'The 2026 Local Government Election count is complete. This page is retained as a neutral archive of the Electoral Commission’s final published national figures.';
-            if (electionClock) {
-              electionClock.querySelector('.clock-label').textContent = 'Election status';
-              electionClock.querySelector('[data-clock-value]').textContent = 'Count complete';
-              electionClock.querySelector('.clock-date').textContent = 'Final figures published by the IEC';
-            }
-            resultStatus.textContent = 'Final official IEC result · all expected voting districts are complete.';
-            resultStatus.classList.add('live');
-          }
-          if (data.reportDate) {
-            resultUpdated.textContent = 'IEC report updated ' + new Date(data.reportDate).toLocaleString('en-ZA', {
-              dateStyle: 'medium', timeStyle: 'short', timeZone: 'Africa/Johannesburg'
-            });
-          }
-        })
-        .catch(function () {
-          resultStatus.textContent = 'Official results are temporarily unavailable. Use the IEC dashboard link below for the latest published count.';
-          resultStatus.classList.remove('live');
-          resultUpdated.textContent = 'The figures shown here come only from the Electoral Commission of South Africa.';
-        });
+    var renderResults = function () {
+      var data = latestData;
+      var selected = area.value === 'national' ? data : data.provinces.find(function (p) { return String(p.id) === area.value; });
+      if (!selected) { area.value = 'national'; selected = data; }
+      results.querySelector('[data-results-location]').textContent = selected.name || 'South Africa';
+      results.querySelectorAll('[data-result]').forEach(function (node) { node.textContent = formatNumber(selected[node.dataset.result]); });
+      var parties = results.querySelector('[data-party-results]');
+      parties.replaceChildren();
+      selected.parties.forEach(function (party) {
+        var row = element('div', undefined, 'party-row');
+        var heading = element('div', undefined, 'party-heading');
+        heading.append(element('strong', party.name), element('span', party.support === null ? '—' : party.support.toFixed(2) + '%'));
+        var bar = element('meter');
+        bar.min = 0; bar.max = 100; bar.value = Math.min(100, Math.max(0, party.support || 0));
+        bar.setAttribute('aria-label', party.name + ' share of valid votes');
+        row.append(heading, bar, element('small', formatNumber(party.votes) + ' votes · ' + formatNumber(party.seats) + ' seats · Leading ' + formatNumber(party.councilsLeading) + ' councils · Controlling ' + formatNumber(party.councilsControlled)));
+        parties.append(row);
+      });
+      var progress = results.querySelector('[data-count-progress]');
+      progress.replaceChildren();
+      [['Voting districts', 'votingDistricts'], ['Wards', 'wards'], ['Municipalities', 'municipalities'], ['Seats allocated', 'seats']].forEach(function (entry) {
+        var done = selected[entry[1] + 'Complete'];
+        var expected = selected[entry[1] + 'Expected'];
+        var percent = expected > 0 && done !== null ? Math.min(100, done / expected * 100) : null;
+        var row = element('div', undefined, 'count-row');
+        var heading = element('div', undefined, 'party-heading');
+        heading.append(element('strong', entry[0]), element('span', percent === null ? '—' : percent.toFixed(1) + '%'));
+        var bar = element('progress'); bar.max = 100;
+        if (percent !== null) bar.value = percent;
+        bar.setAttribute('aria-label', entry[0] + ' complete');
+        row.append(heading, bar, element('small', formatNumber(done) + ' of ' + formatNumber(expected)));
+        progress.append(row);
+      });
+      var reportTime = new Date(selected.reportDate);
+      resultUpdated.textContent = Number.isNaN(reportTime.getTime()) ? 'IEC report time unavailable.' : 'IEC report: ' + reportTime.toLocaleString('en-ZA', { dateStyle: 'medium', timeStyle: 'short', timeZone: 'Africa/Johannesburg' }) + ' SAST';
+      var old = Date.now() - new Date(data.reportDate).getTime() > 15 * 60 * 1000;
+      resultStatus.textContent = (data.countComplete ? 'Count and seat allocation complete — see IEC for certification.' : 'Counting in progress · Results may change.') + (old ? ' The IEC report is over 15 minutes old; showing the latest published figures.' : ' Automatically checking for updates.');
+      if (lastRefreshFailed) resultStatus.textContent = 'Refresh failed — showing the last successful update. Retrying automatically; check the IEC dashboard for the latest results.';
+      resultStatus.classList.toggle('live', !old && !lastRefreshFailed);
+      document.querySelector('[data-count-label]').textContent = data.countComplete ? 'Count complete' : 'Results are coming in';
     };
+    var loadResults = async function () {
+      if (loadingResults) return;
+      loadingResults = true;
+      try {
+        var response = await fetch(results.getAttribute('data-endpoint'), { headers: { Accept: 'application/json' }, cache: 'no-store', signal: AbortSignal.timeout(20000) });
+        if (!response.ok) throw new Error('IEC unavailable');
+        var data = await response.json();
+        if (!Array.isArray(data.parties) || !Array.isArray(data.provinces)) throw new Error('Invalid results');
+        var previousArea = area.value;
+        area.replaceChildren(element('option', 'South Africa'));
+        area.firstChild.value = 'national';
+        data.provinces.forEach(function (province) { var option = element('option', province.name); option.value = province.id; area.append(option); });
+        area.value = previousArea;
+        latestData = data;
+        lastRefreshFailed = false;
+        renderResults();
+      } catch {
+        lastRefreshFailed = true;
+        resultStatus.textContent = latestData ? 'Refresh failed — figures below are from the last successful update. Retrying automatically; check the IEC dashboard for the latest results.' : 'Official results are temporarily unavailable. Retrying automatically; open the IEC dashboard below for the latest count.';
+        resultStatus.classList.remove('live');
+      } finally { loadingResults = false; }
+    };
+    area.addEventListener('change', function () { if (latestData) renderResults(); });
     loadResults();
     setInterval(loadResults, 120000);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) loadResults(); });
   }
 
   /* ---- enquiry form ----------------------------------------------------- */

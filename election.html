@@ -2,10 +2,10 @@
 <html lang="en-ZA">
 <head>
 <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>South Africa Local Elections 2026 — Official voter information</title>
-<meta name="description" content="Official Electoral Commission links for South Africa's 2026 Local Government Elections, including voter information, voting stations and results." />
-<meta property="og:type" content="website" /><meta property="og:site_name" content="THATHA" /><meta property="og:locale" content="en_ZA" /><meta property="og:title" content="Local Elections 2026 — Official voter information and live IEC count" /><meta property="og:description" content="Official IEC voter services, election news and the live national results count." /><meta property="og:image" content="assets/election-voters.webp" />
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" /><link rel="apple-touch-icon" href="assets/apple-touch-icon.png" /><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap" /><link rel="stylesheet" href="styles.css?v=straight-election-banner-20261102" />
+<title>South Africa Local Elections 2026 — Results overview</title>
+<meta name="description" content="Track South Africa’s 2026 local election results: party support, council control and count progress, automatically updated from the IEC." />
+<meta property="og:type" content="website" /><meta property="og:site_name" content="THATHA" /><meta property="og:locale" content="en_ZA" /><meta property="og:title" content="Local Elections 2026 — Results overview and live IEC count" /><meta property="og:description" content="Official IEC voter services, election news and the live national results count." /><meta property="og:image" content="assets/election-voters.webp" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" /><link rel="apple-touch-icon" href="assets/apple-touch-icon.png" /><link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Public+Sans:wght@400;500;600;700&display=swap" /><link rel="stylesheet" href="styles.css?v=20261105-dashboard" />
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -16,16 +16,16 @@
   <div class="wrap election-hero-grid">
     <div>
       <span class="campaign-mark">South Africa · Local Government Elections 2026</span>
-      <h1 data-election-title>Your ward.<br />Your vote.<br />Your local future.</h1>
-      <p class="lead" data-election-intro>Official voter information, Electoral Commission updates and the national results count in one politically neutral place.</p>
+      <h1 data-election-title>Your community.<br />The count.<br />The bigger picture.</h1>
+      <p class="lead" data-election-intro>Follow the 2026 local election count: party support, council control and progress across South Africa. Independent, politically neutral information sourced from the IEC.</p>
       <div class="election-actions">
-        <a class="btn btn-teal btn-lg" href="https://www.elections.org.za/pw/voter/voter-information" rel="noopener">Check my voter details</a>
-        <a class="btn btn-outline btn-lg" href="https://www.elections.org.za/pw/Elections-And-Results/Voting-Stations-LGE-2026" rel="noopener">Find voting stations</a>
+        <a class="btn btn-teal btn-lg" href="#results">Explore the results</a>
+        <a class="btn btn-outline btn-lg" href="https://results.elections.org.za/dashboards/lge/" rel="noopener">Official IEC dashboard</a>
       </div>
-      <div class="election-clock" data-election-clock data-election-date="2026-11-04T21:00:00+02:00">
-        <span class="clock-label">Until voting closes</span>
-        <strong data-clock-value>Calculating&hellip;</strong>
-        <span class="clock-date">Wednesday · 4 November 2026 · 21:00</span>
+      <div class="election-clock">
+        <span class="clock-label">2026 municipal election results</span>
+        <strong data-count-label>Results are coming in</strong>
+        <span class="clock-date">Automatic refresh every two minutes · All times SAST</span>
       </div>
     </div>
     <figure class="election-hero-media">
@@ -35,45 +35,51 @@
   </div>
 </section>
 
-<section class="section band-white" data-election-results data-endpoint="/api/election-results" data-election-close="2026-11-04T21:00:00+02:00">
+<section id="results" class="section band-white" data-election-results data-endpoint="/api/election-results">
   <div class="wrap">
     <div class="section-head wide">
-      <div><span class="eyebrow">Official national count</span><h2>Live IEC results</h2></div>
-      <p class="lead">Figures below are fetched from the Electoral Commission&rsquo;s 2026 national results file. They update automatically as the IEC publishes captured results.</p>
+      <div><span class="eyebrow">2026 · Official IEC data</span><h2>The results<br />at a glance</h2></div>
+      <label class="results-filter">Explore a province<select data-results-area><option value="national">South Africa</option></select></label>
     </div>
-    <div class="results-status" data-results-status role="status">Connecting to the official IEC results service&hellip;</div>
-    <div class="results-grid">
+    <div class="results-status" data-results-status role="status">Connecting to the official IEC results service…</div>
+    <div class="results-foot"><strong data-results-location>South Africa</strong><span data-results-updated>Awaiting the IEC report time.</span></div>
+    <p class="results-note">Results are provisional while counting and seat allocation continue. Support combines ward and proportional representation (PR) votes; ballot totals are not a count of individual voters.</p>
+    <div class="election-dashboard">
+      <article class="card"><h3>Party support</h3><p>Published entries ranked by votes, with seats allocated so far.</p><div data-party-results><p>Waiting for IEC party results…</p></div><p class="results-note">“Other” groups smaller parties; IND represents independents. Leading a council and controlling a council are different measures.</p></article>
+      <article class="card"><h3>How far is the count?</h3><div data-count-progress><p>Waiting for counting progress…</p></div><p class="results-note">Each bar measures a different stage. Seats may still be allocated after votes have been captured.</p></article>
+    </div>
+    <div class="section-head results-heading"><span class="eyebrow">Who controls the councils?</span><h2>The local picture</h2></div>
+    <div class="results-grid council-grid">
+      <article><span>Controlled councils</span><strong data-result="controlledCouncils">—</strong><small>A party has more than half the seats.</small></article>
+      <article><span>Hung councils</span><strong data-result="hungCouncils">—</strong><small>No party has an outright seat majority.</small></article>
+      <article><span>Drawn councils</span><strong data-result="drawnCouncils">—</strong><small>Exactly half the seats, as classified by the IEC.</small></article>
+      <article><span>Not yet calculated</span><strong data-result="councilsPending">—</strong><small>Council results still outstanding.</small></article>
+    </div>
+    <details class="results-details"><summary>View ballot totals and registration figures</summary><div class="results-grid">
       <article><span>Registered voters</span><strong data-result="registeredVoters">—</strong></article>
-      <article><span>Total votes cast</span><strong data-result="totalVotesCast">—</strong></article>
+      <article><span>Ballots cast</span><strong data-result="totalVotesCast">—</strong></article>
       <article><span>Valid votes</span><strong data-result="validVotesCast">—</strong></article>
       <article><span>Spoilt votes</span><strong data-result="spoiltVotes">—</strong></article>
-      <article><span>Voting districts complete</span><strong data-result="votingDistricts">—</strong></article>
-      <article><span>Count progress</span><strong data-result="percentVotingDistrictsComplete">—</strong></article>
-    </div>
-    <div class="results-foot">
-      <span data-results-updated>Awaiting the IEC update time.</span>
-      <a class="textlink" href="https://results.elections.org.za/dashboards/lge/" rel="noopener">Open full official results dashboard &rarr;</a>
-    </div>
+    </div></details>
+    <div class="results-foot"><span>Source: Electoral Commission of South Africa · Checks every two minutes</span><a class="textlink" href="https://results.elections.org.za/dashboards/lge/" rel="noopener">Explore municipality and ward results at the IEC →</a></div>
+    <noscript><p>Enable JavaScript for automatically updated results, or <a href="https://results.elections.org.za/dashboards/lge/">open the official IEC dashboard</a>.</p></noscript>
   </div>
 </section>
 
 <section class="section band-cream">
   <div class="wrap">
-    <div class="section-head wide">
-      <div><span class="eyebrow">Latest official updates</span><h2>Election news<br />from the IEC</h2></div>
-      <a class="textlink" href="https://www.elections.org.za/content/About-Us/News" rel="noopener">All IEC news &rarr;</a>
-    </div>
+    <div class="section-head"><span class="eyebrow">Understanding the results</span><h2>Votes. Seats.<br />Local decisions.</h2></div>
     <div class="grid grid-3 election-news">
-      <article class="card"><span class="news-date">2 November 2026</span><h3>Special voting and Election Day readiness</h3><p>The IEC says special voting runs on 2 and 3 November, ahead of Election Day on 4 November. Approved voters must use the station where they are registered.</p><a class="textlink" href="https://www.elections.org.za/content/About-Us/News/Electoral-Commission-ready-for-successful-Special-Voting-and-Election-Days-2-to-4-November-2026/" rel="noopener">Read official release &rarr;</a></article>
-      <article class="card"><span class="news-date">2026 election week</span><h3>Results Operations Centres</h3><p>The Electoral Commission has established a national results centre and nine provincial centres to support access to verified election information.</p><a class="textlink" href="https://www.elections.org.za/content/About-Us/News/ARRANGEMENTS-FOR-THE-RESULTS-OPERATIONS-CENTRES-FOR-2026-LOCAL-GOVERNMENT-ELECTIONS/" rel="noopener">Read official release &rarr;</a></article>
-      <article class="card"><span class="news-date">19 October 2026</span><h3>Countering election disinformation</h3><p>The IEC and digital platforms announced measures to protect election-information integrity during the 2026 Local Government Elections.</p><a class="textlink" href="https://www.elections.org.za/content/About-Us/News/Electoral-Commission-and-Digital-Platforms-Partner-to-Counter-Disinformation-and-Protect-Election-Information-Integrity-in-South-Africa-s-2026-Local-Government-Elections/" rel="noopener">Read official release &rarr;</a></article>
+      <article class="card"><h3>Support is a share of votes</h3><p>The IEC combines ward and PR votes to show party support. These ballot totals should not be read as individual voter turnout.</p></article>
+      <article class="card"><h3>Leading is not controlling</h3><p>A party can lead a council without holding more than half its seats. Council control reflects a seat majority, rather than the national vote ranking.</p></article>
+      <article class="card"><h3>Let the count develop</h3><p>Early leaders can change as more voting districts report. Follow the progress bars and the IEC report time alongside the party rankings.</p><a class="textlink" href="https://results.elections.org.za/dashboards/lge/" rel="noopener">Read the official results →</a></article>
     </div>
   </div>
 </section>
 
 <section class="section band-white">
   <div class="wrap">
-    <div class="section-head"><span class="eyebrow">Official voter services</span><h2>Prepare before<br />you leave home</h2></div>
+    <div class="section-head"><span class="eyebrow">Official voter services</span><h2>Your official<br />voter services</h2></div>
     <div class="grid grid-3">
       <article class="card"><h3>Confirm your details</h3><p>Check your registration status, ward and designated voting station directly with the IEC.</p><a class="textlink" href="https://www.elections.org.za/pw/voter/voter-information" rel="noopener">Check voter details &rarr;</a></article>
       <article class="card"><h3>Find your station</h3><p>Use the IEC&rsquo;s published 2026 voting-station lists and check the latest information before travelling.</p><a class="textlink" href="https://www.elections.org.za/pw/Elections-And-Results/Voting-Stations-LGE-2026" rel="noopener">View station lists &rarr;</a></article>
@@ -84,4 +90,4 @@
 
 </main>
 <footer class="site"><div class="wrap"><div class="foot-grid"><div class="foot-brand"><img src="assets/logo/lockup-white.webp" alt="THATHA" width="900" height="261" /><p>Take your trade further. Affordable, portable, modular trading infrastructure — being developed for manufacture and assembly in South Africa.</p></div><div><h4>Products</h4><ul><li><a href="products.html#basic">THATHA Basic</a></li><li><a href="products.html#plus">THATHA Plus</a></li><li><a href="products.html#pro">THATHA Pro</a></li><li><a href="government.html">Government Edition</a></li></ul></div><div><h4>Company</h4><ul><li><a href="about.html">About us</a></li><li><a href="sponsor.html">Sponsor a trader</a></li><li><a href="election.html">Election 2026</a></li><li><a href="investors.html">Investors</a></li><li><a href="contact.html">Contact</a></li></ul></div><div><h4>Official information</h4><ul><li><a href="https://www.elections.org.za/" rel="noopener">Electoral Commission</a></li><li><a href="https://www.elections.org.za/pw/voter/voter-information" rel="noopener">Voter information</a></li><li><a href="https://results.elections.org.za/dashboards/lge" rel="noopener">Official results</a></li></ul></div></div><div class="foot-bottom"><span>&copy; 2026 THATHA. All rights reserved.</span><span>Election information links to the Electoral Commission of South Africa.</span><span class="legal-links"><a href="privacy.html">Privacy &amp; POPIA</a> · <a href="terms.html">Terms</a></span></div></div></footer>
-<script src="site.js" defer></script></body></html>
+<script src="site.js?v=20261105-dashboard" defer></script></body></html>
