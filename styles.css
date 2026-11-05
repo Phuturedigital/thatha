@@ -652,12 +652,12 @@ footer.site a:hover { color: var(--apricot); }
 
 
 /* Brand texture on green surfaces, kept soft for readable foreground content. */
-.band-teal, .band-deep, .value-strip, .cost-panel, .impact-hero, .stat-band, footer.site {
+.hero, .band-teal, .band-deep, .value-strip, .cost-panel, .impact-hero, .stat-band, footer.site {
   background-image: linear-gradient(rgba(5, 42, 44, .93), rgba(5, 42, 44, .93)), url("assets/brand-pattern.jpg");
   background-size: auto, 720px auto;
   background-position: center;
 }
-.band-teal, .cost-panel, .impact-hero {
+.hero, .band-teal, .cost-panel, .impact-hero {
   background-image: linear-gradient(rgba(8, 62, 65, .93), rgba(8, 62, 65, .93)), url("assets/brand-pattern.jpg");
 }
 .stat-band {
