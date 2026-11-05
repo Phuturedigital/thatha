@@ -30,6 +30,14 @@
     window.matchMedia('(max-width: 1120px)').addEventListener('change', function () { closeMenu(false); });
   }
 
+  // Keep the brand films from playing over each other.
+  var brandFilms = document.querySelectorAll('.brand-film video');
+  brandFilms.forEach(function (film) {
+    film.addEventListener('play', function () {
+      brandFilms.forEach(function (other) { if (other !== film) other.pause(); });
+    });
+  });
+
   /* ---- IEC dashboard: refresh without a site redeploy ------------------ */
   var results = document.querySelector('[data-election-results]');
   if (results) {

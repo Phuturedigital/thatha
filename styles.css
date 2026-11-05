@@ -725,3 +725,13 @@ html { scroll-padding-top: 96px; }
   .brand-film-grid { grid-template-columns: minmax(0, 1fr); gap: 32px; }
   .brand-film-copy .btn { width: 100%; }
 }
+
+/* Both films share one section; stack on phones without cropping either frame. */
+.brand-film-grid { grid-template-columns: minmax(0, 1fr) repeat(2, minmax(0, 300px)); gap: 32px; max-width: 1240px; }
+@media (min-width: 641px) and (max-width: 980px) {
+  .brand-film-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .brand-film-copy { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .brand-film-grid { grid-template-columns: minmax(0, 1fr); }
+}
